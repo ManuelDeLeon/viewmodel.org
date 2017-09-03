@@ -1,0 +1,36 @@
+{
+  "name": "viewmodel.org",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "test": "jest",
+    "deploy": "meteor-azure --debug --settings settings.json"
+  },
+  "dependencies": {
+    "babel-jest": "^20.0.3",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-runtime": "^6.23.0",
+    "core-js": "^2.4.1",
+    "enzyme": "^2.8.2",
+    "history": "^4.7.2",
+    "jest-cli": "^20.0.4",
+    "meteor-azure": "^2.0.6",
+    "meteor-node-stubs": "~0.2.4",
+    "react": "^15.6.1",
+    "react-addons-test-utils": "^15.6.0",
+    "react-dom": "^15.6.1",
+    "react-highlight": "^0.10.0",
+    "react-prism": "^4.3.0",
+    "react-test-renderer": "^15.6.1",
+    "universal-router": "^3.2.0",
+    "viewmodel-react": "^2.4.1",
+    "viewmodel-react-explorer": "^1.0.15",
+    "viewmodel-react-plugin": "^3.0.0"
+  },
+  "babel": {
+    "presets": ["es2015", "react"],
+    "plugins": ["viewmodel-react-plugin"]
+  }
+}

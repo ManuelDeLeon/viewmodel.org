@@ -1,0 +1,27 @@
+body {
+  margin: 50px;
+}
+
+#body-main {
+  max-width: 1024px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+#react-menu {
+  width: 190px !important;
+}
+
+#react-menu .ui.vertical.text.menu .item {
+  margin: 0;
+  padding-top: 0;
+  color: #676767;
+}
+
+#react-menu .react-menu-item {
+  margin: 8px 0 0 0;
+}
+
+h1.ui.dividing.header {
+  margin-top: 20px;
+}

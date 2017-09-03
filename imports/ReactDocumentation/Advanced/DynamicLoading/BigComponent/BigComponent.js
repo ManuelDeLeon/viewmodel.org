@@ -1,0 +1,5 @@
+BigComponent({
+	render() {
+		<span />
+	}
+})
