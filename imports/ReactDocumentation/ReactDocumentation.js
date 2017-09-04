@@ -7,9 +7,10 @@ ReactDocumentation({
       <div class="twelve wide column" style="width: 740px">
         <Logo />
         <Introduction />
-        <Basics />
-        <Advanced />
-        <Bindings />
+        <Basics b="defer: true" />
+        <Advanced b="defer: true" />
+        <Bindings b="defer: true" />
+        <Finally b="defer: true" />
       </div>
     </div>;
   }

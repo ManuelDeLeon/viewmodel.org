@@ -1,8 +1,9 @@
 Logo({
-  render(){
-    <div >
-      <img src="viewmodel-logo.png"
-           style="
+  render() {
+    <div>
+      <img
+        src="/images/viewmodel-logo.png"
+        style="
             max-height: 100px;
             display: block;
             margin-top: 0;
@@ -12,9 +13,14 @@ Logo({
           "
       />
       <div class="ui basic segment">
-        <p style="font-size: 14px; text-align: right;">Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away.</p>
-        <p style="font-size: small; text-align: right;">- Antoine de Saint-Exupery</p>
+        <p style="font-size: 14px; text-align: right;">
+          Perfection is achieved, not when there is nothing more to add, but
+          when there is nothing left to take away.
+        </p>
+        <p style="font-size: small; text-align: right;">
+          - Antoine de Saint-Exupery
+        </p>
       </div>
-    </div>
+    </div>;
   }
 });
