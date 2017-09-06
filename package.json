@@ -31,6 +31,13 @@
   },
   "babel": {
     "presets": ["es2015", "react"],
-    "plugins": ["viewmodel-react-plugin"]
+    "plugins": [
+      [
+        "viewmodel-react-plugin",
+        {
+          "attributes": ["title", "placeholder"]
+        }
+      ]
+    ]
   }
 }

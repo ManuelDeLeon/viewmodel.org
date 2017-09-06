@@ -17,21 +17,23 @@ Inferno({
   "presets": ["es2015"],
   "plugins": [
     [
-			"viewmodel-react-plugin", {
-      	"useInferno": true
-    	},
-			"babel-plugin-syntax-jsx",
-			"transform-object-rest-spread",
-			"transform-es2015-spread",
-			[
-				"babel-plugin-inferno",
-				{
-					"imports": true
-				}
-			]
-		]
+      "viewmodel-react-plugin",
+      {
+        "useInferno": true
+      }
+    ],
+    "babel-plugin-syntax-jsx",
+    "transform-object-rest-spread",
+    "transform-es2015-spread",
+    [
+      "babel-plugin-inferno",
+      {
+        "imports": true
+      }
+    ]
   ]
-}`}</PrismCode>
+}
+`}</PrismCode>
     </div>;
   }
 });
