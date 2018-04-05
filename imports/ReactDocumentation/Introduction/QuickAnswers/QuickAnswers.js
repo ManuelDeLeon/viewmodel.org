@@ -1,5 +1,4 @@
 import { PrismCode } from "react-prism";
-import Highlight from "react-highlight";
 QuickAnswers({
   message: "",
   render() {

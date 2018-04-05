@@ -23,7 +23,7 @@ Header({
             style="border:none;overflow:hidden;margin-top: 20px"
             scrolling="no"
             frameBorder="0"
-            allowTransparency="true"
+            allowtransparency="true"
           />
         </div>
       </div>
