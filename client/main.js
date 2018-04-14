@@ -6,3 +6,4 @@ import Router from "./router";
 
 // Use Meteor's dependency management
 ViewModel.Tracker = Tracker;
+window.ViewModel = ViewModel;

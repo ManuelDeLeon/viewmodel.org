@@ -123,7 +123,7 @@ ViewModelExplorer({
     return ViewModel.rootComponents.list();
   },
   selectedState: null,
-  savedStates: [],
+  savedStates: [ ],
   addComponentForSave(allComponents, component) {
     if (component.vmComponentName === "ViewModelExplorer") return;
     const data = component.data();
@@ -177,8 +177,6 @@ ViewModelExplorer({
   deleteState() {
     const selectedState = this.selectedState();
     if (!selectedState) return;
-    const response = confirm(`Do you want to delete state '${selectedState}'`);
-    if (!response) return;
     store.remove(selectedState);
     let index = -1;
     for (let state of this.savedStates()) {
@@ -188,12 +186,18 @@ ViewModelExplorer({
         break;
       }
     }
-    this.selectedState(null);
+    if (this.savedStates().length > 0) {
+      this.selectedState(this.savedStates()[0].name);
+    } else {
+      this.selectedState(null);
+    }
+    
   },
   selectedStateStyle() {
     return {
-      width: 130 - this.scrollbarWidth(),
-      backgroundImage: "url(/images/explorer/dropdown_arrow.png)"
+      width: 200 - this.scrollbarWidth(),
+      backgroundImage:
+        "url(https://viewmodel.org/images/explorer/dropdown_arrow.png)"
     };
   },
   render() {
@@ -204,29 +208,15 @@ ViewModelExplorer({
       ">
       <div b="style: panelStyle, hover: hoveringIcon">
         <div style="text-align: left">
-          <img
-            src="/images/explorer/viewmodel-logo-small.png"
-            style="
+          <img src="https://viewmodel.org/images/explorer/viewmodel-logo-small.png" style="
              max-height: 15px;
              margin-top: 3px;
              margin-left: 2px;
              cursor: pointer;
              vertical-align: top;
-             "
-            b="toggle: show"
-          />
-          <span style="font-size: 14px; margin-left: 10px; font-weight: bold; position: relative; top: -4px;">
-            View Models
-          </span>
-          <img
-            src="/images/explorer/add.png"
-            style="margin-left: 10px; cursor: pointer; margin-top: 5px; cursor: pointer;"
-            title="Save current state"
-            b="click: saveState"
-          />
-          <select
-            b="value: selectedState, style: selectedStateStyle, change: loadState"
-            style="
+             " b="toggle: show" />
+          <img src="https://viewmodel.org/images/explorer/add.png" style="margin-left: 10px; cursor: pointer; margin-top: 5px; cursor: pointer;" title="Save current state" b="click: saveState" />
+          <select b="value: selectedState, style: selectedStateStyle, change: loadState" style="
                    -webkit-appearance: button;
                    -webkit-padding-end: 20px;
                    -webkit-padding-start: 2px;
@@ -245,21 +235,14 @@ ViewModelExplorer({
                    margin-left: 10px;
                    margin-top: 4px;
                    vertical-align: top;
-                "
-          >
-            <option
-              b="repeat: savedStates, key: name"
-              value={repeatObject.name}
-            >
+                   width: 185px;
+                ">
+            <option b="repeat: savedStates, key: name" value={repeatObject.name}>
               {repeatObject.name}
             </option>
           </select>
-          <img
-            src="/images/explorer/remove.png"
-            style="margin-left: 10px; cursor: pointer; margin-top: 5px; cursor: pointer;"
-            title="Delete selected state"
-            b="click: deleteState"
-          />
+          <img src="/images/explorer/reload.png" style="margin-left: 10px; cursor: pointer; margin-top: 5px; cursor: pointer;" title="Reload selected state" b="click: loadState" />
+          <img src="https://viewmodel.org/images/explorer/remove.png" style="margin-left: 10px; cursor: pointer; margin-top: 5px; cursor: pointer;" title="Delete selected state" b="click: deleteState" />
         </div>
 
         {this.components().map(c => (

@@ -6,6 +6,7 @@ ViewModel.share({
 
 Person({
   share: 'house',
+  address: '',
   render() {
     <div class="item">
       <div class="content">

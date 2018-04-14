@@ -35,7 +35,7 @@ DisplayComponent({
     }
   },
   headStyle() {
-    const hasChildren = this.children().length > 0 || this.properties().length > 0;
+    const hasChildren = this.viewmodel().children().length > 0 || this.properties().length > 0;
     return {
       color: this.viewmodel() && this.viewmodel().valid() ? 'darkblue' : 'darkred',
       'font-weight': hasChildren ? 'bold' : 'normal',
@@ -52,7 +52,10 @@ DisplayComponent({
             <Property b="repeat: properties, key: name" />
             </tbody>
           </table>
-          <DisplayComponent b="repeat: children, key: vmId"  />
+          
+                  {this.viewmodel().children().map(c => (
+          <DisplayComponent key={c.vmId} viewmodel={c} />
+        ))}
         </div>
 
       </li>
