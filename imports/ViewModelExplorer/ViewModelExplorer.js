@@ -27,19 +27,33 @@ if (typeof window != "undefined") {
 }
 
 let scrollWidth;
+const reloadKey = "vm-reloaded-";
 
 ViewModelExplorer({
   signal: "window",
   windowSize: initialWindowSize,
+  saveLastState() {
+    this.deleteStateAndStore(reloadKey, false);
+    this.saveStateToStore(reloadKey);
+  },
+  loadLastState(){
+    if (store.has(reloadKey)) {
+      this.loadStateFromStore(reloadKey); 
+      this.deleteStateAndStore(reloadKey, false);
+    }
+  },
   created() {
     if (typeof window != "undefined") {
+      const that = this;
       setTimeout(() => {
-        this.windowSize({
+        that.windowSize({
           height: window.innerHeight,
           width: window.innerWidth
         });
         store.forEach((key, val) => {
-          this.savedStates().push({ name: key, components: val });
+          if (key != reloadKey) {
+            that.savedStates().push({ name: key, components: val });
+          }
         });
       });
     }
@@ -136,13 +150,16 @@ ViewModelExplorer({
   },
   saveState() {
     const name = prompt("Name of the current state:");
+    this.saveStateToStore(name);
+    this.selectedState(name);
+  },
+  saveStateToStore(name) {
     const allComponents = {};
     for (let component of this.components()) {
       this.addComponentForSave(allComponents, component);
     }
     this.savedStates().push({ name: name, components: allComponents });
     store.set(name, allComponents);
-    this.selectedState(name);
   },
   loadComponentState(components, component) {
     if (component.vmComponentName === "ViewModelExplorer") return;
@@ -159,25 +176,33 @@ ViewModelExplorer({
     });
   },
   loadState() {
-    const selectedState = this.selectedState();
+    let selectedState = this.selectedState();
+    if (!selectedState && this.savedStates().length) {
+      selectedState = this.savedStates()[0].name;
+    }
+    this.loadStateFromStore(selectedState);
+  },
+  loadStateFromStore(selectedState) {
     if (!selectedState) return;
     const that = this;
-    for (let state of this.savedStates()) {
-      if (state.name === selectedState) {
-        ViewModel.Tracker.nonreactive(function() {
-          for (let component of that.components()) {
-            that.loadComponentState(state.components, component);
-          }
-        });
-
-        break;
-      }
-    }
+    const components = store.get(selectedState);
+    if (components) {
+      ViewModel.Tracker.nonreactive(function() {
+        for (let component of that.components()) {
+          that.loadComponentState(components, component);
+        }
+      });
+    };
   },
   deleteState() {
     const selectedState = this.selectedState();
+    this.deleteStateAndStore(selectedState, true);
+  },
+  deleteStateAndStore(selectedState, selectNext) {
     if (!selectedState) return;
-    store.remove(selectedState);
+    if (store.has(selectedState)) {
+      store.remove(selectedState);
+    }
     let index = -1;
     for (let state of this.savedStates()) {
       index++;
@@ -187,11 +212,12 @@ ViewModelExplorer({
       }
     }
     if (this.savedStates().length > 0) {
-      this.selectedState(this.savedStates()[0].name);
+      if (selectNext) {
+        this.selectedState(this.savedStates()[0].name);
+      }
     } else {
       this.selectedState(null);
     }
-    
   },
   selectedStateStyle() {
     return {
@@ -241,7 +267,7 @@ ViewModelExplorer({
               {repeatObject.name}
             </option>
           </select>
-          <img src="/images/explorer/reload.png" style="margin-left: 10px; cursor: pointer; margin-top: 5px; cursor: pointer;" title="Reload selected state" b="click: loadState" />
+          <img src="https://viewmodel.org/images/explorer/reload.png" style="margin-left: 10px; cursor: pointer; margin-top: 5px; cursor: pointer;" title="Reload selected state" b="click: loadState" />
           <img src="https://viewmodel.org/images/explorer/remove.png" style="margin-left: 10px; cursor: pointer; margin-top: 5px; cursor: pointer;" title="Delete selected state" b="click: deleteState" />
         </div>
 
